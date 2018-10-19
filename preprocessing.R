@@ -1,4 +1,4 @@
-file_list <- list.files(path= "data/json/2018-09", pattern = ".json") # extract from folder "data/json/2018-08" and only files with ".json"
+file_list <- list.files(path= "data/json/2018-09", pattern = ".json") # extract from folder "data/json/2018-09" and only files with ".json"
 #file_list <- file_list[1:1000] # select the first 20 jsons
 
 files_with_path <- paste0("data/json/2018-09/", file_list) # add path to files
@@ -54,7 +54,6 @@ dfs_sorted <- dfs[order(dfs$station_id, dfs$datetime),] #sort the dataframe by s
 
 ldf <- split(dfs_sorted, dfs_sorted$station_id) #separate different stations to own datasets
 
-#test <- ldf[1:2]
 
 ldf <- lapply(ldf,function(x){
   x$lag_val <- lag(x$avl_bikes, 1) #apply a lag column
@@ -62,4 +61,5 @@ ldf <- lapply(ldf,function(x){
 }
 )
 
-#save(ldf, file = "data/ldf092018.Rdata")
+save(ldf, file = "data/ldf.Rdata")
+
