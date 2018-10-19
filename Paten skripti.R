@@ -1,0 +1,2 @@
+# Tämä on Patrikin scripti
+
