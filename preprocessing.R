@@ -1,7 +1,18 @@
-file_list <- list.files(path= "data/json/2018-09", pattern = ".json") # extract from folder "data/json/2018-09" and only files with ".json"
-#file_list <- file_list[1:1000] # select the first 20 jsons
+library(dplyr)
+library(plyr)
 
-files_with_path <- paste0("data/json/2018-09/", file_list) # add path to files
+months <- c(9:4)
+files <- lapply(months, function(x){
+current_path = paste0("data/json/2018-0",x,"/")  
+
+file_list <- list.files(path= current_path, pattern = ".json") # extract from folder "data/json/2018-09" and only files with ".json"
+
+files_with_path <- paste0(current_path, file_list) # add path to files
+
+return(files_with_path)
+})
+
+allFiles <- do.call(c,files)
 
 json_to_df <- function(myjson){
   require(RJSONIO)
@@ -24,11 +35,9 @@ json_to_df <- function(myjson){
   }
 }
 
-library("plyr")
-
 tictoc::tic("Import of jsons") # start timer before importing
-my_list <- lapply(files_with_path, json_to_df)
-names(my_list) <- file_list
+my_list <- lapply(allFiles, json_to_df)
+names(my_list) <- allFiles
 
 dfs <- ldply(my_list, rbind)
 tictoc::toc() # stop timer
@@ -48,8 +57,6 @@ i <- substr(dfs$name, 1, 3) #station id from the station name column
 i <- as.integer(i)
 dfs$station_id <- i
 
-library(dplyr)
-
 dfs_sorted <- dfs[order(dfs$station_id, dfs$datetime),] #sort the dataframe by station_id and datetime
 
 ldf <- split(dfs_sorted, dfs_sorted$station_id) #separate different stations to own datasets
@@ -62,4 +69,6 @@ ldf <- lapply(ldf,function(x){
 )
 
 save(ldf, file = "data/ldf.Rdata")
+
+cowsay::say(what = "I'm done", by = "hypnotoad")
 
