@@ -1,11 +1,101 @@
+library("data.table")
+library("tidyverse")
+
+files <- paste0("data/", list.files(path ="data/", pattern = ".rds"))
+
+tictoc::tic("Start")
+
+allFiles <-  lapply(files, function(x){
+  list <- readRDS(x)
+  df <- do.call(rbind.data.frame, list)
+  return(df)
+})
+
+allData <- do.call(rbind.data.frame, allFiles)
+
+allData$name <- as.character(allData$name)
+Encoding(allData$name) <- "latin1"
+Encoding(allData$name) <- "UTF-8"
+allData$name <- as.factor(allData$name)
+tictoc::toc()
+
+# formatting
+days <- c("Monday", "Tuesday", "Wednesday","Thursday", "Friday", "Saturday", "Sunday")
+my_times <- seq(5, 22, 0.25)
+
+format_df <- function(x){
+  stopifnot(is.data.frame(x))
+  stopifnot("datetime" %in% colnames(x))
+
+  x$date <- as.Date(x$datetime) 
+  x$time <- format(as.POSIXct(x$datetime) ,format = "%H:%M:%S")
+  x$time <- sapply(strsplit(x$time,":"),
+                   function(x) {
+                     x <- as.numeric(x)
+                     x[1]+x[2]/60
+                   })
+  x$day <- weekdays(as.Date(x$date,'%Y-%m-%d'))
+  return(x)
+}
 
 
+tictoc::tic("Test formatting")
+allData <- format_df(allData)
+tictoc::toc()
+
+
+## Fit the models
+
+our_model <- function(day = day,
+                      data = input,
+                      station = current_station,
+                      times = my_times){
+  
+  stopifnot(tolower(day) %in% tolower(weekdays(x=as.Date(seq(7), origin="1950-01-01")))) # check that we have proper dates
+  stopifnot(is.data.frame(data))
+  stopifnot(c("name","day", "time", "avl_bikes", "total_slots", "coordinates") %in% colnames(data))
+  
+  times_df <- data.frame(time = times)
+  
+  daily_data <- data[(data$day == day) & (data$name == station),]
+  
+  if(length(unique(daily_data$avl_bikes)) > 5){
+    daily_data$avl_bikes <- as.integer(daily_data$avl_bikes)
+    model <- lm(avl_bikes ~ poly(time,5), data = daily_data)
+    row <- data.frame(name = station , day = day, coord = daily_data$coordinates[1], slots = daily_data$total_slots[1], R2 = summary(model)$adj.r.squared)
+    row = merge(times, row)
+    row$pred_bikes = round(predict(model, newdata = times_df))
+    print("done")
+    return(row)
+  }
+}
+
+#predictions = data.frame(time = 0, name = "", day = "", coord = NA, slots = 0, R2 = 0, pred_bikes = 0)
+
+
+stations <- unique(allData$name)
+
+station_data <- lapply(stations, function(currStation){
+  
+  output <- lapply(days, function(currDay){
+    print(currStation)
+    print(currDay)
+    return(our_model(day = currDay, data = allData, station = currStation, times = my_times))
+  })
+  
+  output.df <- do.call(rbind.data.frame, output)
+  
+  return(output.df)
+})
+
+
+give_me_data <- do.call(rbind.data.frame, station_data)
+
+saveRDS(give_me_data, "data/another_pred.rds")
+####################################################################
 
 # Alustetaan tarvittavia taulukoita ja vektoreita
 mallit = data.frame(Time = 0, name = "tyhjä", day = "ma", coord = NA, slots = 0, R2 = 0, pred_bikes = 0)
-
-days <- c("Monday", "Tuesday", "Wednesday","Thursday", "Friday", "Saturday", "Sunday")
-times = data.frame(Time = seq(5, 22, 0.25))
 
 # Sovitetaan mallit kaikille asemille
 for(i in 1:length(ldf)){
