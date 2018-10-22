@@ -1,8 +1,7 @@
 server <- function(input,output, session){
   
   data <- reactive({
-  
-  x <- df
+    x <- df
   })
   
   output$dataurl <- renderUI({

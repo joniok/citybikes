@@ -1,20 +1,17 @@
 ---
 title: "Help - Citybike predictor"
 output: 
-  html_document:
-  theme: lumen
-  toc: true
-  number_sections: true
-  toc_float: true
+  md_document
 ---
 
-## Model
+# Model
 
 Lorem ipsum
 
-## 
+\sum_{i=1}^{n} x_i
 
-## Authors
+# Authors
+
 **Data processing and wrangling:** Veera Nenonen ([veeranen](https://github.com/veeranen))  
 **Data analysis and modeling:** Patrik Lauha ([plauha](https://github.com/plauha))  
 **Application development:** Joni Oksanen ([joniok](https://github.com/joniok))  
