@@ -2,7 +2,7 @@ curr_locale <- Sys.getlocale("LC_TIME")
 Sys.setlocale("LC_TIME","en_US.UTF-8")
 
 files <- paste0("data/", list.files(path ="data/", pattern = ".rds"))
-files <- files[2:6]
+files <- files[4:8]
 
 tictoc::tic("Start")
 
@@ -63,7 +63,7 @@ our_model <- function(day = day,
   if(length(unique(daily_data$avl_bikes)) > 5){
     daily_data$avl_bikes <- as.integer(daily_data$avl_bikes)
     model <- lm(avl_bikes ~ poly(time,5), data = daily_data)
-    row <- data.frame(name = station , day = day, coord = daily_data$coordinates[1], slots = daily_data$total_slots[1], R2 = summary(model)$adj.r.squared)
+    row <- data.frame(name = station , day = day, coord = daily_data$coordinates[1], slots = median(as.numeric(daily_data$total_slots)), R2 = summary(model)$adj.r.squared)
     row = merge(times, row)
     row$pred_bikes = round(predict(model, newdata = times_df))
     print("done")
@@ -117,6 +117,9 @@ dt <- tidyr::separate(data = final_data,
 
 dt$lat <- as.numeric(dt$lat)
 dt$long <- as.numeric(dt$long)
+dt$pred_color <- as.integer(dt$pred_bikes)/as.integer(dt$slots)
+
+dt$time <- format(as.POSIXct(dt$x*3600, origin = "2001-01-01", "GMT"), "%H:%M")
 
 saveRDS(dt, "data/prediction.rds")
 

@@ -4,11 +4,11 @@ output:
   md_document
 ---
 
-# Model
+# Estimation
 
 Lorem ipsum
 
-\sum_{i=1}^{n} x_i
+
 
 # Authors
 
