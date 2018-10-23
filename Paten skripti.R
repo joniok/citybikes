@@ -105,4 +105,5 @@ for(i in 1:length(mallit$Time)) {
   }
 }
 
+write.csv(mallit, file = "/home/patrik/Desktop/Kurssit/IntDS/predictions.csv")
 
