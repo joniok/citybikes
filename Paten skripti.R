@@ -13,10 +13,10 @@ kaivari$Time <- format(as.POSIXct(kaivari$X1.datetime) ,format = "%H:%M:%S")
 kaivari['day'] = weekdays(as.Date(kaivari$Date,'%Y-%m-%d'))
 kaivari_subs = subset(kaivari, day == 'tiistai')
 kaivari_subs$Time = sapply(strsplit(kaivari_subs$Time,":"),
-       function(x) {
-         x <- as.numeric(x)
-         x[1]+x[2]/60
-       }
+                           function(x) {
+                             x <- as.numeric(x)
+                             x[1]+x[2]/60
+                           }
 )
 
 kaivari_subs['avl'] = as.numeric(levels(kaivari_subs$X1.avl_bikes))[kaivari_subs$X1.avl_bikes]
@@ -28,13 +28,13 @@ summary(model)$adj.r.squared
 
 #plot(fitted(model),residuals(model))
 predicted.intervals <- predict(model,data.frame(Time=kaivari_subs$Time),interval='confidence',
-                              level=0.99)
+                               level=0.99)
 q = kaivari_subs$Time
 lines(q,predicted.intervals[,1],col='red',lwd=3)
 lines(q,predicted.intervals[,2],col='red',lwd=1)
 lines(q,predicted.intervals[,3],col='red',lwd=1)
 plot(q, (as.numeric(model$coefficients[1]) + as.numeric(model$coefficients[2]) * q + as.numeric(model$coefficients[3]) * q**2 
-  + as.numeric(model$coefficients[4]) * q**3 + as.numeric(model$coefficients[5]) * q**4 + as.numeric(model$coefficients[6]) * q**5), col = 'blue', ylab = "a")
+         + as.numeric(model$coefficients[4]) * q**3 + as.numeric(model$coefficients[5]) * q**4 + as.numeric(model$coefficients[6]) * q**5), col = 'blue', ylab = "a")
 
 #
 #
@@ -60,10 +60,10 @@ for(i in 1:length(ldf)){
   stat$Time <- format(as.POSIXct(stat$datetime) ,format = "%H:%M:%S") 
   stat$Day = weekdays(as.Date(stat$Date,'%Y-%m-%d'))
   stat$Time = sapply(strsplit(stat$Time,":"),
-                             function(x) {
-                               x <- as.numeric(x)
-                               x[1]+x[2]/60
-                             })
+                     function(x) {
+                       x <- as.numeric(x)
+                       x[1]+x[2]/60
+                     })
   # Sovitetaan mallit jokaiselle viikonpäivälle
   for(day in days) {
     stat2 = subset(stat, Day == day)

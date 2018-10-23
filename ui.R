@@ -24,7 +24,7 @@ navbarPage("City bike availability", id = "nav",
                                                  format(seq(ISOdatetime(2001,2,3,0,0,0), 
                                                             ISOdatetime(2001,2,4,0,0,0), 
                                                             by=(60*15)),"%H:%M"), 
-                                                 selected = NULL, multiple = FALSE, options = NULL),
+                                                 selected = "16:15", multiple = FALSE, options = NULL),
                                   
                                   selectizeInput("inputId2", "Station", 
                                                  unique(df$name),
@@ -38,6 +38,11 @@ navbarPage("City bike availability", id = "nav",
                     tags$div(id="cite","Data:", htmlOutput("dataurl")
                     )
            ),
+           
            tabPanel("Plot",
-                    titlePanel("Plot goes here"))
+                  titlePanel("Plot goes here")),
+           tabPanel("Help",
+                    absolutePanel(
+                      includeMarkdown("help/help.md"))
+                    )
 )
