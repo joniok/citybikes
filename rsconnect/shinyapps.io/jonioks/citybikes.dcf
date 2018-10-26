@@ -1,0 +1,10 @@
+name: citybikes
+title:
+username:
+account: jonioks
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 536493
+bundleId: 1664614
+url: https://jonioks.shinyapps.io/citybikes/
+when: 1540556583.99315
