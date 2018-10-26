@@ -18,7 +18,7 @@ Our model assumes that the amount of bikes at a certain station on a certain day
 The main challenge is choosing the degree of the polynomial, so that our model fits the pattern but doesn’t overfit. The same degree should be suitable for all different stations, because it is not possible to adjust the model separately for every single station 
 
 ![Fitting the model](help/demo.png)
-## Application
+
 
 Application is currenlty hosted at Shinyapps.io. More about how to use the application can be found in the help page in the application.
 
