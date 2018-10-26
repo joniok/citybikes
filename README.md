@@ -1,7 +1,7 @@
 # Helsinki city bike availability prediction app
 A Shiny application to predict city bike availability in Helsinki in 15 minute period and daily basis.
 
-Shinyapps.io link: [jonioks.shinyapps.io/citybikes/](https://jonioks.shinyapps.io/citybikes/)
+Link: [jonioks.shinyapps.io/citybikes/](https://jonioks.shinyapps.io/citybikes/)
 
 ## Data
 
@@ -17,6 +17,8 @@ Our model assumes that the amount of bikes at a certain station on a certain day
 
 The main challenge is choosing the degree of the polynomial, so that our model fits the pattern but doesn’t overfit. The same degree should be suitable for all different stations, because it is not possible to adjust the model separately for every single station 
 
+![Fitting the model](help/demo.png)
+
 ## Application
 
 Application is currenlty hosted at Shinyapps.io. More about using the application can be found from the help page in the application.
@@ -26,5 +28,4 @@ Application is currenlty hosted at Shinyapps.io. More about using the applicatio
 Patrik Lauha, Veera Nenonen, Joni Oksanen
 
 
-## Note:
-This was a course project in the course Introduction to Data Science (in University of Helsinki) in fall 2018.
+**Note:**This was a course project in the course Introduction to Data Science (in University of Helsinki) in fall 2018.
