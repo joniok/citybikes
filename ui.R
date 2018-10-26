@@ -1,6 +1,6 @@
 library(leaflet)
 
-navbarPage("City bike availability", id = "nav",
+navbarPage("Helsinki city bike availability", id = "nav",
            
            tabPanel("Map",
                     div(class="outer",
@@ -16,7 +16,7 @@ navbarPage("City bike availability", id = "nav",
                                   draggable = TRUE, top = 60, left = "auto", right = 20, bottom = "auto",
                                   width = 330, height = "auto",
                                   
-                                  h2("Prediction selection"),
+                                  h3("Prediction selection"),
 
                                   selectInput('currDay', 'Day', unique(df$day), selected = unique(df$day)[1]),
                                   selectizeInput("currTime", "Time", unique(df$time), 

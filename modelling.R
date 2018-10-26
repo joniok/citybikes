@@ -45,7 +45,13 @@ allData <- format_df(allData)
 tictoc::toc()
 
 
+
+
 ## Fit the models
+
+fix_coord <- function(x){
+  return(names(which.max(table(x))))
+}
 
 our_model <- function(day = day,
                       data = input,
@@ -63,10 +69,9 @@ our_model <- function(day = day,
   if(length(unique(daily_data$avl_bikes)) > 5){
     daily_data$avl_bikes <- as.integer(daily_data$avl_bikes)
     model <- lm(avl_bikes ~ poly(time,5), data = daily_data)
-    row <- data.frame(name = station , day = day, coord = daily_data$coordinates[1], slots = median(as.numeric(daily_data$total_slots)), R2 = summary(model)$adj.r.squared)
+    row <- data.frame(name = station , day = day, coord = fix_coord(daily_data$coordinates), slots = median(as.numeric(daily_data$total_slots)), R2 = summary(model)$adj.r.squared)
     row = merge(times, row)
     row$pred_bikes = round(predict(model, newdata = times_df))
-    print("done")
     return(row)
   }
 }
@@ -103,11 +108,6 @@ for(i in 1:length(final_data$x)) {
 
 final_data$coord <- as.character(final_data$coord)
 final_data <- final_data[(final_data$name != "155 Piispansilta"),]
-
-aherjatantie_coord <- allData[(allData$name == "523 Ahertajantie") & (!is.na(allData$coordinates)),"coordinates"]
-aherjatantie_coord <- as.character(unique(aherjatantie_coord)[2])
-
-final_data[final_data$name == "523 Ahertajantie", "coord"] <- aherjatantie_coord
 
 dt <- tidyr::separate(data = final_data,
                       col = coord,
