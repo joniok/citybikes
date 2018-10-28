@@ -12,7 +12,7 @@ Lorem ipsum
 
 # Authors
 
-**Data processing and wrangling:** Veera Nenonen ([veeranen](https://github.com/veeranen))  
-**Data analysis and modeling:** Patrik Lauha ([plauha](https://github.com/plauha))  
+**Data processing and wrangling:** Veera Nenonen  
+**Data analysis and modeling:** Patrik Lauha  
 **Application development:** Joni Oksanen ([joniok](https://github.com/joniok))  
 
