@@ -2,7 +2,7 @@ curr_locale <- Sys.getlocale("LC_TIME")
 Sys.setlocale("LC_TIME","en_US.UTF-8")
 
 files <- paste0("data/", list.files(path ="data/", pattern = ".rds"))
-files <- files[4:8]
+files <- files[2:6]
 
 tictoc::tic("Start")
 
