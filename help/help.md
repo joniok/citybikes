@@ -30,11 +30,11 @@ and the accuracy of the prediction may vary between stations.
 
 ### Plot
 
-You can also view daily predictions station wise from the "Plot" tab.
-First select a station by either typing the name of station or from the
-dropdown menu, after that you can select the day of the week of which
-you are interested in. If the station name is left blank, the
-application will select the first station from the list.
+You can also view daily predictions stationwise from the "Plot" tab.
+First select a station by either typing the name of station or selecting
+from the dropdown menu. After that you can select the day of the week.
+If the station name is left blank, the application will select the first
+station from the list.
 
 ### Authors
 
