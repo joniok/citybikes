@@ -1,22 +1,32 @@
 server <- function(input,output, session){
   
   data <- reactive({
-    
     if(is.null(input$stations)){
       x <- df[(df$time == input$currTime) &  (df$day == input$currDay),]
     } else {
       x <- df[(df$time == input$currTime) &  (df$day == input$currDay) & (df$name %in% input$stations),]    }
+
   })
   
   output$dataurl <- renderUI({
     a("HSL city bike stations history data (2018)", target="_blank", href = "https://dev.hsl.fi/")
   })
   
+  text.data <- reactive({
+    validate(need(!is.null(input$plot_station), "Please select a station."))
+  })
+  
   output$pred_plots <- renderPlot({
+    
     plot_data <- df
-    if(is.null(input$stations)){
+    
+    if(input$plot_station == ""){
+      station <- plot_data$name[1]
+    } else {
+      station <- input$plot_station
     }
-    plot_data <- plot_data[(plot_data$name == input$plot_station) & (plot_data$day == input$dataDay),]
+    
+    plot_data <- plot_data[(plot_data$name == station) & (plot_data$day == input$dataDay),]
     plot(plot_data$pred_bikes ~ plot_data$x, 
          xlim = c(5,22),
          xlab = "Predicted bikes",
