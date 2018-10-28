@@ -35,7 +35,9 @@ navbarPage("Helsinki city bike availability", id = "nav",
                       sidebarPanel(
                         selectizeInput('plot_station', 'Station', unique(df$name),
                                        selected = unique(df$name)[1], multiple = FALSE),
-                        selectInput('dataDay', 'Day', unique(df$day), selected = unique(df$day)[1])
+                        selectInput('dataDay', 'Day', unique(df$day), selected = unique(df$day)[1]),
+                        
+                        p("You can examine our daily predictions by selecting a station.")
                       ),
                       mainPanel(
                         plotOutput("pred_plots", width ="100%")

@@ -26,14 +26,29 @@ server <- function(input,output, session){
       station <- input$plot_station
     }
     
+    dates <- format( seq.POSIXt(as.POSIXct(Sys.Date()), 
+                                as.POSIXct(Sys.Date()+1), 
+                                by = "60 min"),
+                     "%H:%M", tz="GMT")
+    dates <- dates[6:23]
+    
+    
     plot_data <- plot_data[(plot_data$name == station) & (plot_data$day == input$dataDay),]
     plot(plot_data$pred_bikes ~ plot_data$x, 
          xlim = c(5,22),
+         axisnames = FALSE,
+         type = "o",
+         col = "darkgreen",
+         lwd = 2,
+         pch = 18,
          xlab = "Predicted bikes",
+         xaxt = 'n',
          ylab = "Time",
          main=paste(plot_data$name[1], 
                     plot_data$day[1], 
                     sep = ", "))
+    axis(side = 1, at= 5:22 ,labels  = FALSE)
+    text(5:22, par("usr")[3]-1.2, labels = dates, srt = 45, pos =1, xpd = TRUE)
   })
   
   output$mymap <- renderLeaflet({
