@@ -32,11 +32,11 @@ server <- function(input,output, session){
     
     getColor <- function(df) {
       sapply(df$pred_color, function(x) {
-        if(x >= 0.75) {
+        if(x >= 0.50) {
           "green"
-        } else if(x >= 0.50) {
+        } else if(x >= 0.30) {
           "orange"
-        } else if (x >= 0.25){
+        } else if (x >= 0.15){
           "red"
         } else {
           "gray"
