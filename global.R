@@ -3,4 +3,4 @@ library(leaflet)
 library(dplyr)
 library(htmltools)
 
-df <- readRDS("./stdata.rds")
+df <- readRDS("data/prediction.rds")

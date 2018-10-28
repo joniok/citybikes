@@ -1,6 +1,6 @@
 library(leaflet)
 
-navbarPage("City bike availability", id = "nav",
+navbarPage("Helsinki city bike availability", id = "nav",
            
            tabPanel("Map",
                     div(class="outer",
@@ -16,31 +16,20 @@ navbarPage("City bike availability", id = "nav",
                                   draggable = TRUE, top = 60, left = "auto", right = 20, bottom = "auto",
                                   width = 330, height = "auto",
                                   
-                                  h2("Prediction selection"),
+                                  h3("Prediction selection"),
 
-                                  selectInput('range', 'Day', c("Monday", "Tuesday", "Wednesday", 
-                                                                "Thursday", "Friday", "Saturday", "Sunday")),
-                                  selectizeInput("inputId", "Time", 
-                                                 format(seq(ISOdatetime(2001,2,3,0,0,0), 
-                                                            ISOdatetime(2001,2,4,0,0,0), 
-                                                            by=(60*15)),"%H:%M"), 
+                                  selectInput('currDay', 'Day', unique(df$day), selected = unique(df$day)[1]),
+                                  selectizeInput("currTime", "Time", unique(df$time), 
                                                  selected = "16:15", multiple = FALSE, options = NULL),
                                   
-                                  selectizeInput("inputId2", "Station", 
+                                  selectizeInput("stations", "Station", 
                                                  unique(df$name),
-                                                 selected = NULL, multiple = TRUE, options = NULL),
-                                  
-                                  
-                                  plotOutput("hist", height = 200)
-
+                                                 selected = NULL, multiple = TRUE, options = NULL)
                     )
                     ),
                     tags$div(id="cite","Data:", htmlOutput("dataurl")
                     )
            ),
-           
-           tabPanel("Plot",
-                  titlePanel("Plot goes here")),
            tabPanel("Help",
                     absolutePanel(
                       includeMarkdown("help/help.md"))

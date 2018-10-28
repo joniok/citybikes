@@ -69,6 +69,3 @@ ldf <- lapply(ldf,function(x){
 )
 
 save(ldf, file = "data/ldf.Rdata")
-
-cowsay::say(what = "I'm done", by = "hypnotoad")
-
