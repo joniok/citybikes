@@ -69,7 +69,7 @@ our_model <- function(day = day,
   if(length(unique(daily_data$avl_bikes)) > 5){
     daily_data$avl_bikes <- as.integer(daily_data$avl_bikes)
     model <- lm(avl_bikes ~ poly(time,5), data = daily_data)
-    row <- data.frame(name = station , day = day, coord = fix_coord(daily_data$coordinates), slots = median(as.numeric(daily_data$total_slots)), R2 = summary(model)$adj.r.squared)
+    row <- data.frame(name = station , day = day, coord = fix_coord(daily_data$coordinates), slots = max(as.numeric(levels(daily_data$total_slots))[daily_data$total_slots]), R2 = summary(model)$adj.r.squared)
     row = merge(times, row)
     row$pred_bikes = round(predict(model, newdata = times_df))
     return(row)

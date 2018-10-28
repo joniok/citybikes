@@ -15,10 +15,10 @@ chosen time and the size of the station.
 
 The meaning of different colors are as followed:
 
--   Grey: less than 10 percent of the station's bikes are available
--   Red: 10 - 34 percent of the station's bikes are available
--   Orange: 35 - 89 percent of the station's bikes are available
--   Green: 90 - 100 percent of the station's bikes are available
+-   Grey: less than 25 percent of the station's bikes are available
+-   Red: 25 - 49 percent of the station's bikes are available
+-   Orange: 50 - 74 percent of the station's bikes are available
+-   Green: 75 - 100 percent of the station's bikes are available
 
 ### Prediction
 

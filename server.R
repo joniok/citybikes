@@ -13,8 +13,17 @@ server <- function(input,output, session){
   })
   
   output$pred_plots <- renderPlot({
-    #time_sequence <-seq(5,22, by= 0.25)
-    plot(pred_bikes~ x, data = df)
+    plot_data <- df
+    if(is.null(input$stations)){
+    }
+    plot_data <- plot_data[(plot_data$name == input$plot_station) & (plot_data$day == input$dataDay),]
+    plot(plot_data$pred_bikes ~ plot_data$x, 
+         xlim = c(5,22),
+         xlab = "Predicted bikes",
+         ylab = "Time",
+         main=paste(plot_data$name[1], 
+                    plot_data$day[1], 
+                    sep = ", "))
   })
   
   output$mymap <- renderLeaflet({
@@ -23,11 +32,11 @@ server <- function(input,output, session){
     
     getColor <- function(df) {
       sapply(df$pred_color, function(x) {
-        if(x >= 0.90) {
+        if(x >= 0.75) {
           "green"
-        } else if(x >= 0.35) {
+        } else if(x >= 0.50) {
           "orange"
-        } else if (x > 0.10){
+        } else if (x >= 0.25){
           "red"
         } else {
           "gray"
