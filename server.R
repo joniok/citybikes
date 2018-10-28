@@ -41,9 +41,9 @@ server <- function(input,output, session){
          col = "darkgreen",
          lwd = 2,
          pch = 18,
-         xlab = "Predicted bikes",
+         xlab = "Time",
          xaxt = 'n',
-         ylab = "Time",
+         ylab = "Predicted bikes",
          main=paste(plot_data$name[1], 
                     plot_data$day[1], 
                     sep = ", "))
